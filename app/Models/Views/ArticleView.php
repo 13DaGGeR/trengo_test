@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Views;
 
+use App\Models\Article;
 use Illuminate\Database\Eloquent\Model;
 
 class ArticleView extends Model
