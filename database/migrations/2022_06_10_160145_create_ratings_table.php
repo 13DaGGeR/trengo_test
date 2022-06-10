@@ -19,6 +19,7 @@ return new class extends Migration
             $table->ipAddress();
             $table->tinyInteger('value', false, true)
                 ->comment('Rating value in range of [1,5]');
+            $table->primary(['article_id', 'ip_address']);
         });
     }
 

@@ -11,7 +11,8 @@ class Category extends Model
 
     protected $fillable = ['title'];
 
-    public function users() {
+    public function users()
+    {
         return $this->belongsToMany(
             User::class,
             'articles_to_categories'

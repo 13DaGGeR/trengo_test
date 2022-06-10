@@ -18,4 +18,9 @@ class Article extends Model
             'articles_to_categories'
         );
     }
+
+    public function articleViews()
+    {
+        return $this->hasMany(ArticleView::class);
+    }
 }

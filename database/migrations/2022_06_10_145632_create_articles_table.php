@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('body');
             $table->float('rating_score', 8, 5);
+            $table->index('rating_score');
         });
     }
 
