@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Models\Score;
+namespace App\Models\Rating;
 
 /**
  * Fair scoring for articles

@@ -36,7 +36,7 @@ class ArticleScoreTest extends TestCase
      * @return void
      */
     public function testFirstScoreIsHigher(float $avg1, int $count1, float $avg2, int $count2): void {
-        $scorer = new App\Models\Score\ArticleScore();
+        $scorer = new App\Models\Rating\ArticleScore();
         $this->assertGreaterThan($scorer->getScore($avg2, $count2), $scorer->getScore($avg1, $count1));
     }
 }

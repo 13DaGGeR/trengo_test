@@ -3,8 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Article;
-use App\Models\Rating;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Rating\Rating;
 use Illuminate\Database\Seeder;
 
 class RatingSeeder extends Seeder
