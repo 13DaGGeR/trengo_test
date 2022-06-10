@@ -20,8 +20,12 @@ class Article extends Model
         );
     }
 
-    public function articleViews()
+    public function views()
     {
         return $this->hasMany(ArticleView::class);
+    }
+
+    public function getTotalViews(): int {
+        return $this->views()->sum('count');
     }
 }
