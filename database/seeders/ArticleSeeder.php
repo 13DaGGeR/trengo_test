@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +16,22 @@ class ArticleSeeder extends Seeder
      */
     public function run()
     {
-        Article::factory(1000)->create();
+        $categories = Category::all()->all();
+        shuffle($categories);
+        $list1 = array_slice($categories, 0, 3);
+        $list2 = array_slice($categories, 2, 4);
+        $list3 = [$categories[5]];
+
+        Article::factory(500)
+            ->hasAttached($list1)
+            ->create();
+        Article::factory(200)
+            ->hasAttached($list2)
+            ->create();
+        Article::factory(200)
+            ->hasAttached($list3)
+            ->create();
+        Article::factory(100)
+            ->create();
     }
 }
