@@ -19,7 +19,6 @@ class ArticleFactory extends Factory
         return [
             'title' => $this->faker->words(3, true),
             'body' => $this->faker->text,
-            'rating_score' => $this->faker->randomFloat(5, 0, 999),
         ];
     }
 }

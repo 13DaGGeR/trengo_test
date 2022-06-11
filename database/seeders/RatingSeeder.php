@@ -19,7 +19,7 @@ class RatingSeeder extends Seeder
         do {
             $article = Article::all()->random(1)->first();
             /** @noinspection PhpUnhandledExceptionInspection */
-            $number = min(random_int(1, 1000), $limit);
+            $number = min(random_int(10, 1000), $limit);
             Rating::factory($number)
                 ->for($article)
                 ->create();

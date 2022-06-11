@@ -18,7 +18,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('title');
             $table->text('body');
-            $table->float('rating_score', 8, 5);
+            $table->float('rating', 8, 5)->default(0);
+            $table->float('rating_score', 8, 5)->default(0);
             $table->index('rating_score');
         });
     }

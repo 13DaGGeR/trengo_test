@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Rating;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

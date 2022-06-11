@@ -10,7 +10,7 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'body', 'rating_score'];
+    protected $fillable = ['title', 'body', 'rating', 'rating_score'];
 
     public function categories()
     {
@@ -25,7 +25,8 @@ class Article extends Model
         return $this->hasMany(ArticleView::class);
     }
 
-    public function getTotalViews(): int {
+    public function getTotalViews(): int
+    {
         return (int)$this->views()->sum('count');
     }
 }
