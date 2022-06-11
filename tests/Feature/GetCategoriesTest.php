@@ -23,7 +23,7 @@ class GetCategoriesTest extends TestCase
             ];
         }
 
-        $this->get('/categories/')
+        $this->get('/api/categories/')
             ->assertStatus(200)
             ->assertJson($categoriesAsArray, true);
     }

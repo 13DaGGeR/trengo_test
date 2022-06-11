@@ -26,7 +26,7 @@ class GetArticleTest extends TestCase
             ];
         }
 
-        $this->get('/articles/'.$article->id)
+        $this->get('/api/articles/'.$article->id)
             ->assertStatus(200)
             ->assertJson([
                 'id' => $article->id,
@@ -40,7 +40,7 @@ class GetArticleTest extends TestCase
     public function testNotFound(): void
     {
         Article::factory(1)->create();
-        $this->get('/articles/'.PHP_INT_MAX)
+        $this->get('/api/articles/'.PHP_INT_MAX)
             ->assertStatus(404);
     }
 
@@ -48,12 +48,12 @@ class GetArticleTest extends TestCase
     {
         $article = Article::factory(1)->create()->first();
 
-        $this->get('/articles/'.$article->id)
+        $this->get('/api/articles/'.$article->id)
             ->assertStatus(200);
         $article->refresh();
         $this->assertSame(1, $article->getTotalViews());
 
-        $this->get('/articles/'.$article->id)
+        $this->get('/api/articles/'.$article->id)
             ->assertStatus(200);
         $article->refresh();
         $this->assertSame(1, $article->getTotalViews());
