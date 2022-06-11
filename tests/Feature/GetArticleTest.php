@@ -33,7 +33,7 @@ class GetArticleTest extends TestCase
                 'title' => $article->title,
                 'body' => $article->body,
                 'categories' => $categoriesAsArray,
-                'rating' => $article->rating,
+                'rating' => (int)$article->rating,
             ], true);
     }
 

@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('categories', [\App\Http\Controllers\CategoryController::class, 'index']);
+Route::get('articles/{id}', [\App\Http\Controllers\ArticleController::class, 'show']);
