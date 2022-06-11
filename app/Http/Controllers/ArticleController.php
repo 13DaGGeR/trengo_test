@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\CountView;
 use App\Models\Article;
 use App\Models\Views\ViewCountManager;
 use Illuminate\Http\Request;
@@ -13,8 +14,7 @@ class ArticleController extends Controller
         $article = Article::query()->with('categories')->findOrFail($id);
         $ip = (string)$request->ip();
 
-        $viewCounter = new ViewCountManager();
-        $viewCounter->register($id, $ip);
+        CountView::dispatch($id, $ip, now()->timestamp);
         return $article;
     }
 }

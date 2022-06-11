@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class ViewCountManager
 {
-    public function register(int $articleId, string $ip): void
+    public function register(int $articleId, string $ip, int $now): void
     {
-        $now = now()->timestamp;
         $isNew = IpView::insertOrIgnore([
             'article_id' => $articleId,
             'ip_address' => $ip,

@@ -24,7 +24,7 @@ class ViewCountManagerTest extends TestCase
         $ip = 'test:ipv6:test:ipv6:test:ipv6:test:ipv6';
 
         $manager = new ViewCountManager();
-        $manager->register($article->id, $ip);
+        $manager->register($article->id, $ip, now()->timestamp);
 
         $this->assertSame(1, $article->getTotalViews());
         $this->assertSame(1, (int)$article->views()->where('date', '>=', $today)->sum('count'));
@@ -37,10 +37,10 @@ class ViewCountManagerTest extends TestCase
         $ip = 'test:ipv6:test:ipv6:test:ipv6:test:ipv6';
 
         $manager = new ViewCountManager();
-        $manager->register($article->id, $ip);
+        $manager->register($article->id, $ip, now()->timestamp);
         $this->assertSame(1, $article->getTotalViews());
         $this->assertSame(1, (int)$article->views()->where('date', '>=', $today)->sum('count'));
-        $manager->register($article->id, $ip);
+        $manager->register($article->id, $ip, now()->timestamp);
         $this->assertSame(1, $article->getTotalViews());
         $this->assertSame(1, (int)$article->views()->where('date', '>=', $today)->sum('count'));
     }
@@ -53,10 +53,10 @@ class ViewCountManagerTest extends TestCase
         $ip2 = 'test:ipv6:test:ipv6:test:ipv6:test:ipv6:2';
 
         $manager = new ViewCountManager();
-        $manager->register($article->id, $ip1);
+        $manager->register($article->id, $ip1, now()->timestamp);
         $this->assertSame(1, $article->getTotalViews());
         $this->assertSame(1, (int)$article->views()->where('date', '>=', $today)->sum('count'));
-        $manager->register($article->id, $ip2);
+        $manager->register($article->id, $ip2, now()->timestamp);
         $this->assertSame(2, $article->getTotalViews());
         $this->assertSame(2, (int)$article->views()->where('date', '>=', $today)->sum('count'));
     }
@@ -69,12 +69,12 @@ class ViewCountManagerTest extends TestCase
         $ip2 = 'test:ipv6:test:ipv6:test:ipv6:test:ipv6:2';
 
         $manager = new ViewCountManager();
-        $manager->register($article->id, $ip1);
+        $manager->register($article->id, $ip1, now()->timestamp);
 
         $this->travel(1)->day();
         $day2 = now()->toDateString();
 
-        $manager->register($article->id, $ip2);
+        $manager->register($article->id, $ip2, now()->timestamp);
         $this->assertSame(2, $article->getTotalViews());
         $this->assertSame(1, (int)$article->views()->where('date', '=', $day1)->sum('count'));
         $this->assertSame(1, (int)$article->views()->where('date', '=', $day2)->sum('count'));
