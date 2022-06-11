@@ -26,6 +26,6 @@ class Article extends Model
     }
 
     public function getTotalViews(): int {
-        return $this->views()->sum('count');
+        return (int)$this->views()->sum('count');
     }
 }
