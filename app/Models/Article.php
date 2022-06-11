@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Rating\Rating;
 use App\Models\Views\ArticleView;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,11 @@ class Article extends Model
     public function views()
     {
         return $this->hasMany(ArticleView::class);
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
     }
 
     public function getTotalViews(): int

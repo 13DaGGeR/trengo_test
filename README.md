@@ -20,3 +20,8 @@ parameters:
 * `body` string, required, max 10000 chars
 * `categories` int[], optional, array of ids of categories
 
+### rate article
+`POST /api/ratings/`
+parameters:
+* `article_id` int, required
+* `value` int, rate value [1,5]
