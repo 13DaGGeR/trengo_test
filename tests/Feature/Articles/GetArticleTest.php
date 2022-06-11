@@ -2,16 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Articles;
 
-use App\Http\Controllers\ArticleController;
 use App\Jobs\CountView;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Views\ViewCountManager;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
