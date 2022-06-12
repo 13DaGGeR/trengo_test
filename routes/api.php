@@ -20,6 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('categories', [\App\Http\Controllers\CategoryController::class, 'index']);
 Route::get('articles/{id}', [\App\Http\Controllers\ArticleController::class, 'show']);
-Route::post('articles', [\App\Http\Controllers\ArticleController::class, 'store']);
-Route::post('ratings', [\App\Http\Controllers\RatingController::class, 'store']);
+Route::middleware(['throttle:create_articles'])->group(static function () {
+    Route::post('articles', [\App\Http\Controllers\ArticleController::class, 'store']);
+});
+Route::middleware(['throttle:rate_articles'])->group(static function () {
+    Route::post('ratings', [\App\Http\Controllers\RatingController::class, 'store']);
+});
 Route::get('articles', [\App\Http\Controllers\ArticleController::class, 'index']);
