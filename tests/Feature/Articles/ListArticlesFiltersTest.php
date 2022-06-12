@@ -14,6 +14,12 @@ class ListArticlesFiltersTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function afterApplicationCreated(callable $callback)
+    {
+        parent::afterApplicationCreated($callback);
+        (new Indexer())->clearIndex();
+    }
+
     protected function callBeforeApplicationDestroyedCallbacks()
     {
         parent::callBeforeApplicationDestroyedCallbacks();
@@ -127,6 +133,10 @@ class ListArticlesFiltersTest extends TestCase
         $this->assertNotContains($idWithNotRequestedCategory, $ids);
     }
 
+    /**
+     * @slow
+     * @return void
+     */
     public function testFuzzySearch(): void
     {
         [$first, $second] = Article::factory(10)->create()->all();
@@ -134,8 +144,8 @@ class ListArticlesFiltersTest extends TestCase
         $first->save();
         $second->body = 'shmestshmestshmest';
         $second->save();
+        sleep(2); # waiting for elasticsearch processes updates
 
-        (new Indexer())->reindex();
         $response = $this->get(
             '/api/articles?'.http_build_query([
                 'q' => '*',
@@ -166,6 +176,10 @@ class ListArticlesFiltersTest extends TestCase
         $this->assertContains($second->id, array_column($json['items'], 'id'));
     }
 
+    /**
+     * @slow
+     * @return void
+     */
     public function testAllFilters(): void
     {
         $title = 'a_very_testable_title';
@@ -195,7 +209,7 @@ class ListArticlesFiltersTest extends TestCase
         Article::factory(1)->hasAttached($requestedCategory)->create();
 
         $date = now()->modify('1 day ago')->format('Y-m-d');
-        (new Indexer())->reindex();
+        sleep(2); # waiting for elasticsearch processes updates
 
         $response = $this->get(
             '/api/articles?'.http_build_query([

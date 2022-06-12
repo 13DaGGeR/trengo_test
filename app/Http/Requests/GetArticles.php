@@ -29,7 +29,7 @@ class GetArticles extends FormRequest
         ];
     }
 
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         if (is_string($this->categories)) {
             $this->merge([

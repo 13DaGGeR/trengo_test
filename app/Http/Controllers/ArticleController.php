@@ -9,6 +9,9 @@ use App\Models\Article;
 use App\Models\ArticlesList\ArticleListRequest;
 use App\Models\ArticlesList\ArticlesService;
 use App\Models\Category;
+use DateTimeImmutable;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -24,7 +27,7 @@ class ArticleController extends Controller
         return $article;
     }
 
-    public function store(CreateArticle $request)
+    public function store(CreateArticle $request): JsonResponse
     {
         /** @var Article $article */
         $article = Article::create($request->validated());
@@ -39,7 +42,10 @@ class ArticleController extends Controller
         ], 201);
     }
 
-    public function index(GetArticles $request)
+    /**
+     * @throws Exception
+     */
+    public function index(GetArticles $request): JsonResponse
     {
         $listRequest = new ArticleListRequest();
         if ($request->has('page_size')) {
@@ -49,10 +55,10 @@ class ArticleController extends Controller
             $listRequest->setPage($request->page);
         }
         if ($request->has('date_from')) {
-            $listRequest->setDateFrom(new \DateTimeImmutable($request->date_from));
+            $listRequest->setDateFrom(new DateTimeImmutable($request->date_from));
         }
         if ($request->has('date_to')) {
-            $listRequest->setDateTo(new \DateTimeImmutable($request->date_to));
+            $listRequest->setDateTo(new DateTimeImmutable($request->date_to));
         }
         if ($request->has('categories')) {
             $listRequest->setCategories($request->categories);

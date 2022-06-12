@@ -39,6 +39,7 @@ class Indexer
     {
         $this->client->deleteByQuery([
             'index' => self::INDEX,
+            'refresh' => true,
             'body' => [
                 'query' => [
                     'match_all' => (object)[]
