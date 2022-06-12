@@ -66,6 +66,18 @@ class ListArticlesViewsSortingTest extends TestCase
         $this->assertCount(1, $json['items']);
         $ids = array_column($json['items'], 'id');
         $this->assertContains($popularYesterday->id, $ids);
+
+        $response = $this->get(
+            '/api/articles?'.http_build_query([
+                'sort' => 'views',
+                'page_size' => 1,
+            ])
+        )
+            ->assertStatus(200);
+        $json = $response->json();
+        $this->assertCount(1, $json['items']);
+        $ids = array_column($json['items'], 'id');
+        $this->assertContains($popularYesterday->id, $ids);
     }
 
     private function processQueue(): void

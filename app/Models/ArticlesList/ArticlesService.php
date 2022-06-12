@@ -47,8 +47,10 @@ class ArticlesService
             $builder
                 ->select('articles.*')
                 ->leftJoin('article_views AS av', static function ($join) use ($request) {
-                    $join->on('articles.id', '=', 'av.article_id')
-                        ->where('av.date', '>=', $request->getTrendingDate());
+                    $join->on('articles.id', '=', 'av.article_id');
+                    if ($request->getTrendingDate() !== null) {
+                        $join->where('av.date', '>=', $request->getTrendingDate());
+                    }
                 })
                 ->groupBy('articles.id')
                 ->orderByRaw('SUM(av.count) DESC');
