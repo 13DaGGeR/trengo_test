@@ -151,4 +151,8 @@ return [
         'block_for' => 1,
     ],
 
+    'elasticsearch' => [
+        'host' => env('ELASTICSEARH_HOST', 'elasticsearch'),
+        'port' => env('ELASTICSEARH_PORT', '9200'),
+    ]
 ];

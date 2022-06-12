@@ -4,7 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Article;
 use App\Models\Category;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Search\ArticleIndex\Indexer;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
+use Elastic\Elasticsearch\Exception\ServerResponseException;
 use Illuminate\Database\Seeder;
 
 class ArticleSeeder extends Seeder
@@ -13,6 +15,8 @@ class ArticleSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     * @throws ClientResponseException
+     * @throws ServerResponseException
      */
     public function run()
     {
@@ -33,5 +37,7 @@ class ArticleSeeder extends Seeder
             ->create();
         Article::factory(100)
             ->create();
+
+        (new Indexer)->recreate();
     }
 }
