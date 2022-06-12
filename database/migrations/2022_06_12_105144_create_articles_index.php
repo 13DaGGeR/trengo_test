@@ -17,7 +17,11 @@ return new class extends Migration
         if (app()->runningUnitTests()) {
             return;
         }
-        (new IndexManager())->createArticlesIndex(app()->make(Client::class));
+
+        $client = app()->make(Client::class);
+        if (!$client->indices()->exists(['index' => Indexer::INDEX])) {
+            (new IndexManager())->createArticlesIndex($client);
+        }
         (new Indexer())->reindex();
     }
 
