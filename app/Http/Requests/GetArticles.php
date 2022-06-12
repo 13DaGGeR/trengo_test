@@ -23,7 +23,7 @@ class GetArticles extends FormRequest
             'date_from' => 'date|nullable',
             'date_to' => 'date|nullable' . ($this->has('date_from') ? '|gte:date_from' : ''),
             'sort' => 'in:' . SortOrder::VIEWS . ',' . SortOrder::RATING,
-            'trending_date' => 'required_if:sort,views',
+            'trending_date' => 'date|nullable',
             'page' => 'numeric|min:' . ArticleListRequest::MIN_PAGE . '|max:' . ArticleListRequest::MAX_PAGE,
             'page_size' => 'numeric|min:' . ArticleListRequest::MIN_PAGE_SIZE . '|max:' . ArticleListRequest::MAX_PAGE_SIZE,
         ];

@@ -52,6 +52,8 @@ class ArticlesService
                 })
                 ->groupBy('articles.id')
                 ->orderByRaw('SUM(av.count) DESC');
+        } else {
+            $builder->orderBy('rating_score', 'DESC');
         }
 
         return $builder;
