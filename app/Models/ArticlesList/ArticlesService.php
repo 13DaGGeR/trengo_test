@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class ArticlesService
 {
-    public function getList(ArticleListRequest $request): array {
+    public function getList(ArticleListRequest $request): array
+    {
         return $this->getQueryBuilder($request)
             ->with('categories')
             ->offset($request->getPageSize() * ($request->getPage() - 1))
@@ -19,7 +20,8 @@ class ArticlesService
             ->all();
     }
 
-    public function getCount(ArticleListRequest $request): int {
+    public function getCount(ArticleListRequest $request): int
+    {
         return $this->getQueryBuilder($request)->count();
     }
 
@@ -27,7 +29,7 @@ class ArticlesService
     {
         $builder = Article::query();
         if (count($request->getCategories()) > 0) {
-            $builder->whereHas('categories', static function(Builder $q) use ($request) {
+            $builder->whereHas('categories', static function (Builder $q) use ($request) {
                 $q->whereIn('id', $request->getCategories());
             });
         }
@@ -40,6 +42,16 @@ class ArticlesService
         if ($request->getQuery() !== '') {
             $ids = (new Searcher())->getArticleIds($request->getQuery());
             $builder->whereIn('id', $ids);
+        }
+        if ($request->getSortOrder() === SortOrder::VIEWS) {
+            $builder
+                ->select('articles.*')
+                ->leftJoin('article_views AS av', static function ($join) use ($request) {
+                    $join->on('articles.id', '=', 'av.article_id')
+                        ->where('av.date', '>=', $request->getTrendingDate());
+                })
+                ->groupBy('articles.id')
+                ->orderByRaw('SUM(av.count) DESC');
         }
 
         return $builder;

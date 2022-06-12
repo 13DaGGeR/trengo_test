@@ -66,6 +66,12 @@ class ArticleController extends Controller
         if ($request->has('q')) {
             $listRequest->setQuery($request->q);
         }
+        if ($request->has('sort')) {
+            $listRequest->setSortOrder($request->sort);
+        }
+        if ($request->has('trending_date')) {
+            $listRequest->setTrendingDate(new DateTimeImmutable($request->trending_date));
+        }
 
         $service = new ArticlesService();
         $count = $service->getCount($listRequest);
