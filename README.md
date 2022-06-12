@@ -41,3 +41,17 @@ parameters:
 * `q` string - search request, fuzzy search will be performed by text and body of the articles
 * `sort` string - could be either `rating` or `views`. If `sort=views` requested, `trending_date` can be provided
 * `trending_date` string in format of YYYY-MM-DD - minimal date to count views if `sort=views` requested 
+
+
+#### A note about choices =)
+Some approaches may seem strange or unreasonable, so I would like to explain my thinking process.
+
+I see sorting "by views" by an arbitrary period as the main performance bottleneck.
+As writing new views performed on every article read request, I decided that delaying the writing needed to provide content faster.
+I avoided locking unique pairs of "ip-article" of views in redis, because if these processed in a queue, locking does not have much sense.
+The denormalization of the views table is needed to speed up article list requests with the "by views" sorting.
+My checks showed that requests with joining the `article_views` table are 2-3 times faster than joining the `ip_views`.
+
+Elasticsearch used in a somewhat incomplete way: the ability to sort results is ignored.
+This is because I did not find the way to implement sorting by article views for a given date inside elasticsearch.
+Using sorting inside elasticsearch only for rating search seems unreasonable for me: filtering logic will be duplicated in code.
