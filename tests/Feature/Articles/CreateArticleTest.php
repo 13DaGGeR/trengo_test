@@ -7,12 +7,13 @@ namespace Articles;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Ramsey\Uuid\Type\Integer;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class CreateArticleTest extends TestCase
 {
     use RefreshDatabase;
+    use WithoutMiddleware;
 
     /** @throws \JsonException */
     public function testHappyPath(): void

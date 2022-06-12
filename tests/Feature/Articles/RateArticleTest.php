@@ -6,11 +6,13 @@ namespace Articles;
 
 use App\Models\Article;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class RateArticleTest extends TestCase
 {
     use RefreshDatabase;
+    use WithoutMiddleware;
 
     public function testHappyPath(): void
     {
