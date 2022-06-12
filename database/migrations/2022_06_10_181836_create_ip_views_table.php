@@ -48,5 +48,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('ip_views');
+        Schema::dropIfExists('article_views');
     }
 };

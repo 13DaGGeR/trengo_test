@@ -22,3 +22,4 @@ Route::get('categories', [\App\Http\Controllers\CategoryController::class, 'inde
 Route::get('articles/{id}', [\App\Http\Controllers\ArticleController::class, 'show']);
 Route::post('articles', [\App\Http\Controllers\ArticleController::class, 'store']);
 Route::post('ratings', [\App\Http\Controllers\RatingController::class, 'store']);
+Route::get('articles', [\App\Http\Controllers\ArticleController::class, 'index']);

@@ -7,6 +7,7 @@ namespace App\Models\Search\ArticleIndex;
 use App\Models\Article;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
+use Elastic\Elasticsearch\Exception\MissingParameterException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
 
 class Indexer
@@ -32,11 +33,17 @@ class Indexer
     /**
      * @throws ServerResponseException
      * @throws ClientResponseException
+     * @throws MissingParameterException
      */
-    public function flushIndex(): void
+    public function clearIndex(): void
     {
-        $this->client->indices()->flush([
-            'index' => self::INDEX
+        $this->client->deleteByQuery([
+            'index' => self::INDEX,
+            'body' => [
+                'query' => [
+                    'match_all' => (object)[]
+                ]
+            ]
         ]);
     }
 
@@ -44,9 +51,9 @@ class Indexer
      * @throws ServerResponseException
      * @throws ClientResponseException
      */
-    public function recreate(): void
+    public function reindex(): void
     {
-        $this->flushIndex();
+        $this->clearIndex();
         Article::chunk(1000, function (iterable $articles) {
             $this->indexArticlesBatch($articles);
         });

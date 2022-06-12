@@ -38,6 +38,6 @@ class ArticleSeeder extends Seeder
         Article::factory(100)
             ->create();
 
-        (new Indexer)->recreate();
+        (new Indexer)->reindex();
     }
 }

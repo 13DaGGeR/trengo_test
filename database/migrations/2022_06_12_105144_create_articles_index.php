@@ -14,8 +14,11 @@ return new class extends Migration
      */
     public function up()
     {
+        if (app()->runningUnitTests()) {
+            return;
+        }
         (new IndexManager())->createArticlesIndex(app()->make(Client::class));
-        (new Indexer())->recreate();
+        (new Indexer())->reindex();
     }
 
     /**
@@ -25,6 +28,10 @@ return new class extends Migration
      */
     public function down()
     {
+        if (app()->runningUnitTests()) {
+            return;
+        }
+
         (new IndexManager())->dropArticlesIndex(app()->make(Client::class));
     }
 };
