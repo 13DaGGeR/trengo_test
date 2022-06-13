@@ -16,16 +16,20 @@ class RatingManager
                 'value' => $value,
             ]) > 0;
         if ($isNew) {
-            $article = Article::find($articleId);
-            $totals = $article->ratings()
-                ->selectRaw('COUNT(*) AS `count`')
-                ->selectRaw('AVG(value) AS avg')
-                ->first();
-
-            $scorer = new ArticleScore();
-            $article->rating = (float)$totals->avg;
-            $article->rating_score = $scorer->getScore((float)$totals->avg, (int)$totals->count);
-            $article->save();
+            $this->refreshArticleRating(Article::find($articleId));
         }
+    }
+
+    public function refreshArticleRating($article): void
+    {
+        $totals = $article->ratings()
+            ->selectRaw('COUNT(*) AS `count`')
+            ->selectRaw('AVG(value) AS avg')
+            ->first();
+
+        $scorer = new ArticleScore();
+        $article->rating = (float)$totals->avg;
+        $article->rating_score = $scorer->getScore((float)$totals->avg, (int)$totals->count);
+        $article->save();
     }
 }

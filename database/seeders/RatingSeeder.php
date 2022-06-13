@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Article;
 use App\Models\Rating\Rating;
+use App\Models\Rating\RatingManager;
 use Illuminate\Database\Seeder;
 
 class RatingSeeder extends Seeder
@@ -15,6 +16,7 @@ class RatingSeeder extends Seeder
      */
     public function run()
     {
+        $ratingManager = new RatingManager();
         $limit = 10000;
         do {
             $article = Article::all()->random(1)->first();
@@ -23,6 +25,7 @@ class RatingSeeder extends Seeder
             Rating::factory($number)
                 ->for($article)
                 ->create();
+            $ratingManager->refreshArticleRating($article);
             $limit -= $number;
         } while ($limit > 0);
     }
