@@ -18,7 +18,7 @@ final class ArticleListRequest
 
     private int $pageSize = self::MAX_PAGE_SIZE_FOR_LIST;
 
-    private string $sortOrder = SortOrder::RATING;
+    private SortOrder $sortOrder = SortOrder::RATING;
 
     private string $query = '';
 
@@ -31,110 +31,68 @@ final class ArticleListRequest
 
     private ?DateTimeImmutable $trendingDate = null;
 
-    /**
-     * @return int
-     */
     public function getPage(): int
     {
         return $this->page;
     }
 
-    /**
-     * @param  int  $page
-     * @return ArticleListRequest
-     */
     public function setPage(int $page): self
     {
         $this->page = min(self::MAX_PAGE, max(self::MIN_PAGE, $page));
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getPageSize(): int
     {
         return $this->pageSize;
     }
 
-    /**
-     * @param  int  $pageSize
-     * @return ArticleListRequest
-     */
     public function setPageSize(int $pageSize): self
     {
         $this->pageSize = min(self::MAX_PAGE_SIZE, max(self::MIN_PAGE_SIZE, $pageSize));
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getSortOrder(): string
+    public function getSortOrder(): SortOrder
     {
         return $this->sortOrder;
     }
 
-    /**
-     * @param  string  $sortOrder
-     * @return ArticleListRequest
-     */
-    public function setSortOrder(string $sortOrder): self
+    public function setSortOrder(SortOrder $sortOrder): self
     {
-        if (!in_array($sortOrder, SortOrder::ORDERS, true)) {
-            $sortOrder = SortOrder::RATING;
-        }
         $this->sortOrder = $sortOrder;
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getQuery(): string
     {
         return $this->query;
     }
 
-    /**
-     * @param  string  $query
-     * @return ArticleListRequest
-     */
     public function setQuery(string $query): self
     {
         $this->query = $query;
         return $this;
     }
 
-    /**
-     * @return int[]
-     */
+    /** @return int[] */
     public function getCategories(): array
     {
         return $this->categories;
     }
 
-    /**
-     * @param  int[]  $categories
-     */
+    /** @param  int[]  $categories */
     public function setCategories(array $categories): self
     {
         $this->categories = array_map('intval', $categories);
         return $this;
     }
 
-    /**
-     * @return DateTimeImmutable|null
-     */
     public function getDateFrom(): ?DateTimeImmutable
     {
         return $this->dateFrom;
     }
 
-    /**
-     * @param  DateTimeImmutable|null  $dateFrom
-     * @return ArticleListRequest
-     */
     public function setDateFrom(?DateTimeImmutable $dateFrom): self
     {
         if ($this->dateTo !== null && $dateFrom !== null && $dateFrom > $this->dateTo) {
@@ -144,18 +102,11 @@ final class ArticleListRequest
         return $this;
     }
 
-    /**
-     * @return DateTimeImmutable|null
-     */
     public function getDateTo(): ?DateTimeImmutable
     {
         return $this->dateTo;
     }
 
-    /**
-     * @param  DateTimeImmutable|null  $dateTo
-     * @return ArticleListRequest
-     */
     public function setDateTo(?DateTimeImmutable $dateTo): self
     {
         if ($this->dateFrom !== null && $dateTo !== null && $dateTo < $this->dateFrom) {
@@ -166,18 +117,11 @@ final class ArticleListRequest
         return $this;
     }
 
-    /**
-     * @return DateTimeImmutable|null
-     */
     public function getTrendingDate(): ?DateTimeImmutable
     {
         return $this->trendingDate;
     }
 
-    /**
-     * @param  DateTimeImmutable|null  $trendingDate
-     * @return ArticleListRequest
-     */
     public function setTrendingDate(?DateTimeImmutable $trendingDate): self
     {
         $this->trendingDate = $trendingDate;

@@ -51,6 +51,7 @@ class Indexer
     /**
      * @throws ServerResponseException
      * @throws ClientResponseException
+     * @throws MissingParameterException
      */
     public function reindex(): void
     {
@@ -62,7 +63,6 @@ class Indexer
 
     /**
      * @param  iterable<Article>  $array
-     * @return void
      * @throws ClientResponseException
      * @throws ServerResponseException
      */

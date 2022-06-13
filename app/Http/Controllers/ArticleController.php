@@ -8,6 +8,7 @@ use App\Jobs\CountView;
 use App\Models\Article;
 use App\Models\ArticlesList\ArticleListRequest;
 use App\Models\ArticlesList\ArticlesService;
+use App\Models\ArticlesList\SortOrder;
 use App\Models\Category;
 use DateTimeImmutable;
 use Exception;
@@ -67,7 +68,7 @@ class ArticleController extends Controller
             $listRequest->setQuery($request->q);
         }
         if ($request->has('sort')) {
-            $listRequest->setSortOrder($request->sort);
+            $listRequest->setSortOrder(SortOrder::from($request->sort));
         }
         if ($request->has('trending_date')) {
             $listRequest->setTrendingDate(new DateTimeImmutable($request->trending_date));
