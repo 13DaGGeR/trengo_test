@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateArticle;
 use App\Http\Requests\GetArticles;
+use App\Http\Resources\ArticleResource;
 use App\Jobs\CountView;
 use App\Models\Article;
 use App\Models\ArticlesList\ArticleListRequest;
@@ -25,7 +26,7 @@ class ArticleController extends Controller
         $ip = (string)$request->ip();
 
         CountView::dispatch($id, $ip, now()->timestamp);
-        return $article;
+        return new ArticleResource($article);
     }
 
     public function store(CreateArticle $request): JsonResponse
@@ -84,7 +85,7 @@ class ArticleController extends Controller
             $list = $service->getList($listRequest);
         }
         return response()->json([
-            'items' => $list,
+            'items' => ArticleResource::collection($list),
             'page' => 1,
             'per_page' => self::MAX_PER_PAGE_FOR_LIST,
             'total' => $count,

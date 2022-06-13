@@ -25,6 +25,6 @@ class GetCategoriesTest extends TestCase
 
         $this->get('/api/categories/')
             ->assertStatus(200)
-            ->assertJson($categoriesAsArray, true);
+            ->assertJson(['data' => $categoriesAsArray], true);
     }
 }

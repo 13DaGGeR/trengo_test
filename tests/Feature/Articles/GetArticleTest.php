@@ -32,11 +32,13 @@ class GetArticleTest extends TestCase
         $this->get('/api/articles/'.$article->id)
             ->assertStatus(200)
             ->assertJson([
-                'id' => $article->id,
-                'title' => $article->title,
-                'body' => $article->body,
-                'categories' => $categoriesAsArray,
-                'rating' => (int)$article->rating,
+                'data' => [
+                    'id' => $article->id,
+                    'title' => $article->title,
+                    'body' => $article->body,
+                    'categories' => $categoriesAsArray,
+                    'rating' => (int)$article->rating,
+                ]
             ], true);
     }
 
