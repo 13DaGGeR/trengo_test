@@ -1,3 +1,14 @@
+Local install instructions:
+```shell
+git clone git@github.com:13DaGGeR/trengo_test.git \
+&& cd trengo_test \
+&& cp .env.example .env \
+&& docker run --rm -u "$(id -u):$(id -g)" -v $(pwd):/opt -w /opt laravelsail/php81-composer:latest composer install --ignore-platform-reqs \
+&& ./vendor/bin/sail up -d --build \
+&& ./vendor/bin/sail artisan migrate \
+&& ./vendor/bin/sail artisan db:seed \
+&& ./vendor/bin/sail artisan test
+```
 
 Workers (not needed to run tests):
 ```
