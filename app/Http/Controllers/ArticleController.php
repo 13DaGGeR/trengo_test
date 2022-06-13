@@ -18,8 +18,6 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    private const MAX_PER_PAGE_FOR_LIST = 100;
-
     public function show(Request $request, int $id)
     {
         $article = Article::query()->with('categories')->findOrFail($id);
@@ -86,8 +84,8 @@ class ArticleController extends Controller
         }
         return response()->json([
             'items' => ArticleResource::collection($list),
-            'page' => 1,
-            'per_page' => self::MAX_PER_PAGE_FOR_LIST,
+            'page' => $listRequest->getPage(),
+            'page_size' => $listRequest->getPageSize(),
             'total' => $count,
         ], $code);
     }

@@ -19,9 +19,38 @@ Workers (not needed to run tests):
 
 ### get list of categories
 `GET /api/categories`
+##### response example:
+```json
+{
+    "data": [
+        {
+            "id": 1,
+            "title": "Category name"
+        }
+    ]
+}
+```
 
 ### get article
 `GET /api/articles/{id}`
+##### response example:
+```json
+{
+  "data": {
+    "id": 1,
+    "title": "et laborum itaque",
+    "body": "Non illum sed consequatur nihil. Eligendi et magnam optio velit aut.",
+    "created_at": "2022-06-13 18:23:06",
+    "rating": 4.9999,
+    "categories": [
+      {
+        "id": 1,
+        "title": "Category name"
+      }
+    ]
+  }
+}
+```
 
 ### create article
 `POST /api/articles/`
@@ -31,12 +60,31 @@ parameters:
 * `body` string, required, max 10000 chars
 * `categories` int[], optional, array of ids of categories
 
+##### response examples:
+```json
+{
+    "id": 1001
+}
+```
+```json
+{
+  "message": "The title field is required.",
+  "errors": {
+    "title": [
+      "The title field is required."
+    ]
+  }
+}
+```
+
 ### rate article
 `POST /api/ratings/`
 
 parameters:
 * `article_id` int, required
 * `value` int, rate value [1,5]
+
+response result is empty
 
 ### get list of articles
 `GET /api/articles/`
@@ -53,6 +101,29 @@ parameters:
 * `sort` string - could be either `rating` or `views`. If `sort=views` requested, `trending_date` can be provided
 * `trending_date` string in format of YYYY-MM-DD - minimal date to count views if `sort=views` requested 
 
+##### response example:
+```json
+{
+    "items": [
+        {
+            "id": 560,
+            "title": "et laborum itaque",
+            "body": "Non illum sed consequatur nihil. Eligendi et magnam optio velit aut.",
+            "created_at": "2022-06-13 18:23:06",
+            "rating": 3.0937,
+            "categories": [
+                {
+                    "id": 9,
+                    "title": "atque"
+                }
+            ]
+        }
+    ],
+    "page": 1,
+    "page_size": 1,
+    "total": 1000
+}
+```
 
 #### A note about choices =)
 Some approaches may seem strange or unreasonable, so I would like to explain my thinking process.

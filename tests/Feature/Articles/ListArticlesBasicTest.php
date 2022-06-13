@@ -19,7 +19,7 @@ class ListArticlesBasicTest extends TestCase
             ->assertJsonStructure([
                 'items',
                 'page',
-                'per_page',
+                'page_size',
                 'total',
             ]);
     }
