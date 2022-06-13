@@ -19,7 +19,7 @@ return new class extends Migration
         }
 
         $client = app()->make(Client::class);
-        if (!$client->indices()->exists(['index' => Indexer::INDEX])) {
+        if ($client->indices()->exists(['index' => Indexer::INDEX])->getStatusCode() !== 200) {
             (new IndexManager())->createArticlesIndex($client);
         }
         (new Indexer())->reindex();
